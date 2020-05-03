@@ -1,28 +1,53 @@
 from typing import List
 
+# time O(N*logN)/ memory O(1)
+
 
 class Solution:
 
   def findDuplicate(self, nums: List[int]) -> int:
-    obj = {}
-    for num in nums:
-      if num not in obj:
-        obj[num] = 1
+    # first 0 for edge case with [1,1,2]
+    # because ans always should be the high number ...
+    low = 0
+    high = len(nums) - 1
+    mid = low + (high - low) // 2
+    count = 0
+
+    while high - low > 1:
+      # Important to get int value, not float,
+      # otherways it will break everything ... =(
+      mid = low + (high - low) // 2
+      # print('low %.2f, mid %.2f, high %.2f' % (low, mid, high))
+
+      count = 0
+      for num in nums:
+        if mid < num <= high:
+          count += 1
+
+      # print('count %d' % count)
+      if count > high - mid:
+        # ans from [mid, high]
+        low = mid
       else:
-        obj[num] += 1
+        # ans from [low, mid]
+        high = mid
 
-    for keyNumber in obj.keys():
-      if obj[keyNumber] > 1:
-        return keyNumber
-
-    return None
+    # print('low %.2f, mid %.2f, high %.2f' % (low, mid, high))
+    return high
 
 
 my = Solution()
-n = [1, 3, 4, 2, 2]
+n = [1, 1, 2]
+# n = [3, 1, 3, 4, 2]
+# n = [1, 3, 4, 2, 2]
 ans = my.findDuplicate(n)
 print("ans", ans)
+
+# Runtime: 72 ms, faster than 40.63% of Python3 online submissions for Find the Duplicate Number.
+# Memory Usage: 16.3 MB, less than 7.14% of Python3 online submissions for Find the Duplicate Number.
 '''
+explanation:
+URl: https://leetcode.com/problems/find-the-duplicate-number/discuss/73022/Python-Solution-with-O(1)-space-and-O(nlogn)-time
 [1 2 3 4 5 5]
 SOLUTION - like binary search but with numbers from [1 to n]
 
