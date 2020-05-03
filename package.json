@@ -1,0 +1,12 @@
+{
+  "name": "287_find_the_duplicate_number",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+,
+  "nodemonConfig": { "delay": "1" },
+  "scripts": 
+  {
+    "dev": "nodemon --exec python3 main.py ./main.py" 
+  }
+}
